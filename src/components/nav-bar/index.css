@@ -51,6 +51,12 @@
     border: none;
 
     padding: 0.5vh 0.5vw;
+
+    transition: background-color 0.2s;
+}
+
+#nav-bar-nav > button:hover {
+    background-color: var(--secondary-accent);
 }
 
 @media (orientation: portrait) {
