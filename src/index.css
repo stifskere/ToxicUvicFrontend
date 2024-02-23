@@ -1,0 +1,19 @@
+
+:root {
+    --primary-accent: #cf0a2c;
+    --secondary-gray: #272727;
+    --primary-gray: #313131;
+}
+
+* {
+    margin: 0;
+}
+
+body, html, main, #root {
+    height: 100%;
+    width: 100%;
+}
+
+#root {
+    background-color: black;
+}
