@@ -1,20 +1,73 @@
 
+@font-face {
+    font-family: "jelle-roman";
+    src: url("../public/JelleeRoman.ttf");
+}
+
 :root {
-    --primary-accent: #cf0a2c;
-    --secondary-accent: #b4001f;
-    --secondary-gray: #272727;
-    --primary-gray: #313131;
+    --primary-accent: 207, 10, 44;
+    --secondary-accent: 180, 0, 31;
+    --secondary-gray: 39, 39, 39;
+    --primary-gray: 49, 49, 49;
 }
 
 * {
     margin: 0;
+
+    font-family: "jelle-roman", sans-serif;
+    font-weight: 100;
+
 }
 
 body, html, main, #root {
     height: 100%;
     width: 100%;
+
+    overflow: hidden;
 }
 
 #root {
     background-color: black;
+}
+
+.content {
+    position: absolute;
+    width: 70%;
+
+    max-width: 900px;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 15px;
+
+    margin-top: 30px;
+
+    @media (orientation: portrait) {
+        left: 10vw;
+        transform: translateX(-5vw);
+    }
+}
+
+.content > .controls {
+    height: 30vh;
+    width: 50vh;
+
+    min-height: 300px;
+    min-width: 250px;
+
+    @media (orientation: portrait) {
+        display: none;
+    }
+}
+
+.loading-item {
+    animation: ghost-animation 3s infinite;
+}
+
+@keyframes ghost-animation {
+    0% { opacity: 0.5; }
+    50% { opacity: 0.7; }
+    100% { opacity: 0.5; }
 }

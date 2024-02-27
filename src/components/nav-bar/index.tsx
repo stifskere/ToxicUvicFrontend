@@ -1,6 +1,7 @@
 import {ReactElement, KeyboardEvent} from "react";
+import {FaMagnifyingGlass} from "react-icons/fa6";
 
-import logo from "../../../public/logo.png";
+import logo from "../../../public/ToxicUvicBig.png";
 
 import "./index.css";
 
@@ -23,8 +24,8 @@ export default function NavBar({onSearch}: NavBarProps): ReactElement {
 	return <nav id="nav-bar">
 		<img src={logo} alt="toxic-uvic-logo" className="nav-bar-logo" />
 		<div id="nav-bar-nav">
+			<FaMagnifyingGlass onClick={onClickSubmit} />
 			<input onKeyDown={onInputKeyPress} placeholder="Busca algo..."/>
-			<button onClick={onClickSubmit}>Buscar</button>
 		</div>
 	</nav>;
 }

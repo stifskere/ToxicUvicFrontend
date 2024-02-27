@@ -1,7 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
+const path = require("node:path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-require("dayjs").extend(require("dayjs/plugin/advancedFormat"))
 
 module.exports = {
     mode: "development",

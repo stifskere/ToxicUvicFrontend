@@ -1,35 +1,26 @@
-import {ReactElement, useEffect, useState} from 'react';
+import {MutableRefObject, ReactElement, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 
 import NavBar from "./components/nav-bar";
+import TrendingCategories from "./components/trending-categories";
+import PostList from "./components/post-list";
 
 import "./index.css";
-import Post, {PostData} from "./components/post";
+import NewPost from "./components/new-post";
 
 function App(): ReactElement {
-	const [posts, setPosts]: StateTuple<PostData[] | undefined> = useState();
-
-	useEffect((): void => {
-		
-	}, []);
-
-	function onSearch(query: string): void {
-
-	}
+	const [query, setQuery]: StateTuple<string | undefined> = useState();
+	const [tags, setTags]: StateTuple<string[] | undefined> = useState();
 
 	return <main>
-		<NavBar onSearch={onSearch} />
-		{/* TODO what are you thinking? */}
-		{posts === undefined
-			? <div>
-				<div/>
-				<div/>
-				<div/>
+		<NavBar onSearch={setQuery} />
+		<section className="content">
+			<PostList query={query} tags={tags}/>
+			<div className="controls">
+				<TrendingCategories onSelect={setTags} />
+				<NewPost />
 			</div>
-			: posts.map((post: PostData): ReactElement =>
-					<Post post={post}/>
-				)
-		}
+		</section>
 	</main>;
 }
 
