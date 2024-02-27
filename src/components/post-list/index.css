@@ -9,9 +9,10 @@
     gap: 15px;
 
     max-height: 90vh;
-    overflow-y: scroll;
 
     scrollbar-width: none;
+
+    overflow-y: scroll;
 }
 
 .posts-container > div {

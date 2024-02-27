@@ -38,13 +38,15 @@ export default function NewPost(): ReactElement {
 		const message: HTMLTextAreaElement = document.getElementById("new-text-input") as HTMLTextAreaElement;
 		const modal: HTMLDivElement = document.getElementById("new-post-modal") as HTMLDivElement;
 
+		const tags: string[] = message.value
+			.split(' ')
+			.filter(w => w.startsWith("#"))
+			.map(w => w.substring(1, w.length))
+
 		await RequestManager.putPost({
 			message: message.value,
 			username: username.value,
-			attachments: message.value
-				.split(' ')
-				.filter(w => w.startsWith("#"))
-				.map(w => w.substring(1, w.length))
+			...(tags.length > 0 ? {categories: tags} : {})
 		});
 
 		username.value = "";
@@ -55,7 +57,7 @@ export default function NewPost(): ReactElement {
 		location.reload();
 	}
 
-	function close() {
+	function close(): void {
 		const modal: HTMLDivElement = document.getElementById("new-post-modal") as HTMLDivElement;
 		modal.style.visibility = "hidden";
 	}
