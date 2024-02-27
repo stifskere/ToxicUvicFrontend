@@ -126,8 +126,8 @@ export namespace RequestManager {
         const response: CountResponse | boolean = await requestTo({
             path: "/feed/length",
             parameters: {
-                ...(categories ? {categories: categories.join(',').trim()} : {}),
-                ...(query ? {query: query} : {})
+                ...(categories !== undefined ? {categories: categories.join(',').trim()} : {}),
+                ...(query !== undefined ? {query: query} : {})
             }
         });
 

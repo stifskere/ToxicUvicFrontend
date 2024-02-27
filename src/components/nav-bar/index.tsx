@@ -25,7 +25,7 @@ export default function NavBar({onSearch}: NavBarProps): ReactElement {
 		<img src={logo} alt="toxic-uvic-logo" className="nav-bar-logo" />
 		<div id="nav-bar-nav">
 			<FaMagnifyingGlass onClick={onClickSubmit} />
-			<input onKeyDown={onInputKeyPress} placeholder="Busca algo..."/>
+			<input onKeyDown={onInputKeyPress} placeholder="Cerca algo..."/>
 		</div>
 	</nav>;
 }

@@ -27,3 +27,37 @@
 
     border-radius: 8px;
 }
+
+.empty-post-container {
+    height: 200px;
+
+    background-color: rgb(var(--secondary-gray));
+
+    border-radius: 15px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    color: rgba(255, 255, 255, 0.46);
+
+    text-align: center;
+
+    @media (orientation: landscape) {
+        padding: 0 1vw;
+    }
+}
+
+.empty-post-container:not( > .not-selectable) > * {
+    transition: color 0.5s;
+}
+
+.empty-post-container:not( > .not-selectable) > h2 {
+    font-size: 1.4em;
+}
+
+.empty-post-container:not( > .not-selectable):hover > * {
+    color: rgb(255,255,255);
+    cursor: pointer;
+}

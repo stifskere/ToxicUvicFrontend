@@ -3,8 +3,9 @@ import {MutableRefObject, ReactElement, useEffect, useRef, useState} from "react
 import {RequestManager, RequestTypes} from "../../misc/request-manager";
 import PostData = RequestTypes.PostData;
 
-import "./index.css";
 import Post from "../post";
+
+import "./index.css";
 
 interface PostListProps {
 	query?: string;
@@ -19,6 +20,12 @@ class PostListManager {
 
 	public static async grabMorePostsOrResetFor(query?: string, categories?: string[]): Promise<PostData[] | undefined> {
 		if (this.currentQuery !== query || this.currentCategories !== categories || !this.postNumber) {
+			if (query !== undefined && query.length <= 0)
+				query = undefined;
+
+			if (categories !== undefined && categories.length <= 0)
+				categories = undefined;
+
 			this.postNumber = await RequestManager.getFeedCount({categories, query});
 			this.loadedPosts = [];
 			this.currentCategories = categories;
@@ -46,8 +53,6 @@ class PostListManager {
 	}
 }
 
-// TODO: arreglar el estat en carregar novas query o tags.
-
 export default function PostList({query, tags}: PostListProps): ReactElement {
 	const [posts, setPosts]: StateTuple<PostData[] | undefined> = useState();
 	const processing: MutableRefObject<boolean> = useRef(false);
@@ -70,8 +75,6 @@ export default function PostList({query, tags}: PostListProps): ReactElement {
 		const element: HTMLDivElement
 			= document.querySelector(".posts-container") as HTMLDivElement;
 
-		setPosts([]);
-
 		PostListManager
 			.grabMorePostsOrResetFor(query, tags)
 			.then(setPosts);
@@ -80,7 +83,7 @@ export default function PostList({query, tags}: PostListProps): ReactElement {
 		return (): void => element.removeEventListener("scroll", onScroll);
 	}, [query, tags]);
 
-	if (posts === undefined)
+	if (!posts)
 		return <div className="posts-container">
 			<div className="loading-item"/>
 			<div className="loading-item"/>
@@ -88,6 +91,30 @@ export default function PostList({query, tags}: PostListProps): ReactElement {
 			<div className="loading-item"/>
 			<div className="loading-item"/>
 		</div>;
+
+	query ??= "";
+	tags ??= [];
+
+	if (PostListManager.isEmpty) {
+		return <div className="posts-container empty-post-container">
+			{query.length <= 0 && tags.length <= 0
+				? <>
+					<h2 className="not-selectable">No hi ha posts disponibles.</h2>
+				</>
+				: <>
+					<h2>No s'ha pogut trobat res amb {
+						query.length > 0
+							? tags.length > 0
+								? `la cerca: "${query}" amb les categories seleccionades.`
+								: `la cerca: "${query}"`
+							: "les tags seleccionades."
+					}
+					</h2>
+					<h3>Siusplau, fes una altra cerca...</h3>
+				</>
+			}
+		</div>
+	}
 
 	return <div className="posts-container">
 		{posts.map((p: PostData, k: number): ReactElement => <Post key={k} post={p} />)}
