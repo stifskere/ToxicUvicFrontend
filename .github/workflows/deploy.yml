@@ -1,0 +1,34 @@
+name: Publish Docker image
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  push:
+    name: Push Docker image to toxicuvic container registry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build Image
+        id: build-image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: toxic-uvic
+          tags: toxic-uvic-frontend
+          containerfiles: |
+            ./Dockerfile
+
+      - name: Push to toxic uvic registry
+        id: push-to-toxicuvic
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build-image.outputs.image }}
+          tags: ${{ steps.build-image.outputs.tags }}
+          registry: ${{ secrets.ACR_REGISTRY_NAME }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Print image url
+        run: echo "Image pushed to ${{ steps.push-to-toxicuvic.outputs.registry-paths }}"
