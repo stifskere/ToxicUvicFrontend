@@ -78,7 +78,7 @@ export namespace RequestManager {
         if (!path.startsWith('/'))
             path = '/' + path;
 
-        path = `http://localhost:10001${path}?`;
+        path = `https://api.toxicuvic.es${path}?`;
 
         parameters ??= {};
 
