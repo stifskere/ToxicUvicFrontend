@@ -80,7 +80,7 @@ export default function Post({post}: PostProps): ReactElement {
 			<h2>{post.username}</h2>
 		</div>
 		<p className="post-content">
-			{escapeHTML(post.message).split(' ').map((part, index) => (
+			{escapeHTML(post.message).split(' ').map((part: string, index: number): ReactElement => (
 				part.match(/#\w+/g) ? (
 					<button key={index} onClick={clickHashtag(part.slice(1))} className="in-post-category">
 						#{part.slice(1)}
