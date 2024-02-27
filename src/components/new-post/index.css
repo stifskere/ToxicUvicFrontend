@@ -46,6 +46,8 @@
 }
 
 .new-post-modal {
+    visibility: hidden;
+
     position: absolute;
 
     top: 50%;
